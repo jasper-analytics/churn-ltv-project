@@ -1,0 +1,27 @@
+# Raw and processed data (not committed)
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+*.xlsx
+*.csv
+*.parquet
+
+# Models
+models/*.joblib
+*.pkl
+
+# Python / Jupyter
+__pycache__/
+*.pyc
+.venv/
+.ipynb_checkpoints/
+
+# Secrets and credentials
+.env
+*.json
+!docs/*.json
+.DS_Store
+
+# Spyder
+.spyproject/
