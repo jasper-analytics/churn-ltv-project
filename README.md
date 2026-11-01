@@ -20,8 +20,9 @@ A non-contractual retailer cannot observe cancellations, so churn has to be defi
 |---|---|
 | Churn | No purchase in the 60 days after the snapshot date |
 | LTV horizon | Net revenue in the 90 days after the snapshot date |
-| Snapshot dates | TBD (rolling, e.g. monthly) |
-| Train / validation / test split | Time-based. TBD cutoffs |
+| Population | Customers with a purchase in the 180 days before the snapshot |
+| Snapshot dates | First of each month, 2010-06-01 to 2011-10-01 (6-month burn-in; last snapshot needs a full 60-day label window) |
+| Train / validation / test split | Time-based with embargo months so label windows never overlap: train 2010-06 to 2011-03; validation 2011-05, 2011-06; test 2011-08, 2011-09, 2011-10 |
 | Cleaning rules | Drop null Customer ID; treat invoices starting with "C" as cancellations; drop non-positive prices; revenue = Quantity x Price |
 
 ## Approach
