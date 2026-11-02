@@ -22,3 +22,12 @@ Running notes: what I decided, why, and what didn't work. This becomes raw mater
 - Chose 60-day churn as primary label, 90-day as sensitivity check.
 - Strong seasonality: highest churn after Dec-Apr snapshots (Christmas lull). Training sees one lull, test (Aug-Oct 2011) has none. Listed as a limitation.
 - Split uses embargo months (skip 2011-04 and 2011-07) because labels look 60 days ahead.
+
+## 2026-11-03 (features and baselines)
+- Built 29 features per customer per monthly snapshot (recency, frequency, monetary, gaps, relative trends, returns). Leakage test passed: features identical with and without future data.
+- Rows: train 30,673 / val 5,705 / test 8,453 (6,021 embargo rows unused). Churn rate 60.8% / 58.9% / 51.3%.
+- Naive baselines to beat (AUC): recency only 0.65; fewer orders_180 0.71-0.72; fewer orders_total 0.72-0.74. Test AUC must clearly exceed ~0.72 to show value.
+- One-time buyers churn ~79%, 5+ order customers ~34%.
+- Drift: lifetime features (tenure, orders_total, revenue_total) grow with snapshot date; 5+ order customers are 28% of train but 52% of test. Plan: ablate these features.
+- LTV target: median 0, mean 548, top 1% hold 32% of revenue, 1.3% negative. Plan: two-part model (buys at all x amount), log target clipped at 0, train-only cap at 99.5th percentile, report decile totals / Spearman / top-decile capture, not raw squared error.
+- Seasonality: annual features (same window last year, Sep-Nov share) need 12 months of history, so they exist only from 2010-12 onward. Test as a secondary experiment; try month-of-year as an ablation.
